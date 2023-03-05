@@ -3,6 +3,7 @@ SET GLOBAL general_log = 'OFF';
 RENAME TABLE mysql.general_log TO mysql.general_log_temp;
 
 DELETE FROM mysql.general_log_temp WHERE event_time <= CURDATE() + INTERVAL -14 DAY AND command_type = 'Query';
+DELETE FROM mysql.general_log_temp WHERE event_time <= CURDATE() + INTERVAL -14 DAY AND command_type = 'Quit';
 DELETE FROM mysql.general_log_temp WHERE event_time <= CURDATE() + INTERVAL -90 DAY AND command_type = 'Execute';
 DELETE FROM mysql.general_log_temp WHERE event_time <= CURDATE() + INTERVAL -365 DAY AND command_type = 'Connect';
 DELETE FROM mysql.general_log_temp WHERE event_time <= CURDATE() + INTERVAL -365 DAY AND command_type NOT IN('Query','Execute','Connect');
